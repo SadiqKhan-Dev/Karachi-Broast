@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "db:generate": "prisma generate",
@@ -16,7 +16,6 @@
   "dependencies": {
     "@clerk/nextjs": "^5.7.5",
     "@hookform/resolvers": "^3.9.0",
-    "@next/swc-win32-x64-msvc": "^16.1.6",
     "@prisma/client": "^5.22.0",
     "@radix-ui/react-alert-dialog": "^1.1.2",
     "@radix-ui/react-avatar": "^1.1.1",
