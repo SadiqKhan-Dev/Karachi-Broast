@@ -4,7 +4,9 @@
       "Bash(pg_isready -h localhost -p 5432 2>&1 || echo \"PostgreSQL not reachable\")",
       "Bash(where psql:*)",
       "Read(//c/Program Files/**)",
-      "Bash(mkdir -p \"E:/VS-CODES/charity and volunteering/Fast-Food/src/app/sign-in/[[...rest]]\" && mkdir -p \"E:/VS-CODES/charity and volunteering/Fast-Food/src/app/sign-up/[[...rest]]\")"
+      "Bash(mkdir -p \"E:/VS-CODES/charity and volunteering/Fast-Food/src/app/sign-in/[[...rest]]\" && mkdir -p \"E:/VS-CODES/charity and volunteering/Fast-Food/src/app/sign-up/[[...rest]]\")",
+      "Bash(find \"E:/VS-CODES/charity and volunteering/Fast-Food/src\" -name \"*.ts\" | xargs grep -l \"stripe\" 2>/dev/null)",
+      "Bash(cd \"E:/VS-CODES/charity and volunteering/Fast-Food\" && npx tsc --noEmit 2>&1 | head -30)"
     ]
   }
 }

@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import Link from "next/link"
-import { ChevronRight, Clock, Truck, Shield, Star, Zap } from "lucide-react"
+import { ChevronRight, Clock, Truck, Shield, Star, Zap, Drumstick, Sandwich, Pizza, Utensils, Gift, GlassWater, type LucideIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ProductCard } from "@/components/products/product-card"
@@ -11,13 +11,13 @@ export const metadata: Metadata = {
   description: "Order the crispiest broast, burgers, pizza and more. Fast delivery across Karachi.",
 }
 
-const categories = [
-  { name: "Broast & Chicken", slug: "broast-chicken", icon: "🍗", image: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=500" },
-  { name: "Burgers", slug: "burgers", icon: "🍔", image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500" },
-  { name: "Pizza", slug: "pizza", icon: "🍕", image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500" },
-  { name: "Sides", slug: "sides-snacks", icon: "🍟", image: "https://images.unsplash.com/photo-1630384060421-a4323ce5663e?w=500" },
-  { name: "Deals", slug: "deals-combos", icon: "🎁", image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=500" },
-  { name: "Beverages", slug: "beverages", icon: "🥤", image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=500" },
+const categories: { name: string; slug: string; icon: LucideIcon; image: string }[] = [
+  { name: "Broast & Chicken", slug: "broast-chicken", icon: Drumstick, image: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=500" },
+  { name: "Burgers", slug: "burgers", icon: Sandwich, image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500" },
+  { name: "Pizza", slug: "pizza", icon: Pizza, image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500" },
+  { name: "Sides", slug: "sides-snacks", icon: Utensils, image: "https://images.unsplash.com/photo-1630384060421-a4323ce5663e?w=500" },
+  { name: "Deals", slug: "deals-combos", icon: Gift, image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=500" },
+  { name: "Beverages", slug: "beverages", icon: GlassWater, image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=500" },
 ]
 
 async function getFeaturedProducts() {
@@ -181,7 +181,9 @@ export default async function HomePage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/90 via-zinc-950/30 to-transparent" />
                   <div className="absolute inset-0 flex flex-col items-center justify-end p-4">
-                    <span className="text-3xl mb-2">{cat.icon}</span>
+                    <div className="mb-2 h-9 w-9 rounded-full bg-orange-500/20 flex items-center justify-center">
+                      <cat.icon className="h-5 w-5 text-orange-400" />
+                    </div>
                     <p className="text-white font-semibold text-sm text-center leading-tight">{cat.name}</p>
                   </div>
                 </div>

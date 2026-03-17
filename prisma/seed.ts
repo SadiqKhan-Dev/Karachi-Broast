@@ -17,22 +17,22 @@ async function main() {
   // ============================================
   const [broast, burgers, pizza, sides, deals, beverages] = await Promise.all([
     prisma.category.create({
-      data: { name: 'Broast & Chicken', slug: 'broast-chicken', description: 'Crispy fried chicken and broast specialties', icon: '🍗', sortOrder: 1, image: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=600' },
+      data: { name: 'Broast & Chicken', slug: 'broast-chicken', description: 'Crispy fried chicken and broast specialties', icon: 'Drumstick', sortOrder: 1, image: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=600' },
     }),
     prisma.category.create({
-      data: { name: 'Burgers', slug: 'burgers', description: 'Juicy burgers and sandwiches', icon: '🍔', sortOrder: 2, image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600' },
+      data: { name: 'Burgers', slug: 'burgers', description: 'Juicy burgers and sandwiches', icon: 'Sandwich', sortOrder: 2, image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600' },
     }),
     prisma.category.create({
-      data: { name: 'Pizza', slug: 'pizza', description: 'Delicious pizzas with fresh toppings', icon: '🍕', sortOrder: 3, image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600' },
+      data: { name: 'Pizza', slug: 'pizza', description: 'Delicious pizzas with fresh toppings', icon: 'Pizza', sortOrder: 3, image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600' },
     }),
     prisma.category.create({
-      data: { name: 'Sides & Snacks', slug: 'sides-snacks', description: 'Fries, wings, rings and more', icon: '🍟', sortOrder: 4, image: 'https://images.unsplash.com/photo-1630384060421-a4323ce5663e?w=600' },
+      data: { name: 'Sides & Snacks', slug: 'sides-snacks', description: 'Fries, wings, rings and more', icon: 'Utensils', sortOrder: 4, image: 'https://images.unsplash.com/photo-1630384060421-a4323ce5663e?w=600' },
     }),
     prisma.category.create({
-      data: { name: 'Deals & Combos', slug: 'deals-combos', description: 'Best value meal deals', icon: '🎁', sortOrder: 5, image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600' },
+      data: { name: 'Deals & Combos', slug: 'deals-combos', description: 'Best value meal deals', icon: 'Gift', sortOrder: 5, image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600' },
     }),
     prisma.category.create({
-      data: { name: 'Beverages', slug: 'beverages', description: 'Cold drinks, shakes and lassi', icon: '🥤', sortOrder: 6, image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600' },
+      data: { name: 'Beverages', slug: 'beverages', description: 'Cold drinks, shakes and lassi', icon: 'GlassWater', sortOrder: 6, image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600' },
     }),
   ])
 
@@ -926,6 +926,458 @@ async function main() {
   })
 
   // ============================================
+  // BROAST & CHICKEN — additional products
+  // ============================================
+  await prisma.product.create({
+    data: {
+      name: 'Chicken Malai Boti',
+      slug: 'chicken-malai-boti',
+      description: 'Tender boneless chicken marinated in cream, yoghurt and aromatic spices, then char-grilled to juicy perfection. Silky smooth with a mild, buttery flavour.',
+      categoryId: broast.id,
+      price: 899, comparePrice: 1049,
+      image: 'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=600',
+      calories: 540, prepTime: 18, isFeatured: true, isPopular: true, tags: ['malai', 'grilled', 'creamy', 'boneless'],
+      customizations: {
+        create: [
+          { name: 'Pieces', type: 'SINGLE', required: true, options: { create: [{ name: '4 Pieces', price: 0, isDefault: true }, { name: '6 Pieces', price: 300 }, { name: '8 Pieces', price: 550 }] } },
+          { name: 'Spice Level', type: 'SINGLE', required: false, options: { create: [{ name: 'Mild', price: 0, isDefault: true }, { name: 'Medium', price: 0 }, { name: 'Hot', price: 0 }] } },
+        ],
+      },
+    },
+  })
+
+  await prisma.product.create({
+    data: {
+      name: 'Lahori Chargha',
+      slug: 'lahori-chargha',
+      description: 'A true Lahori classic — whole chicken marinated in Lahori spices, steamed and then deep fried until gloriously crispy. Serve with naan and raita.',
+      categoryId: broast.id,
+      price: 1499, comparePrice: 1799,
+      image: 'https://images.unsplash.com/photo-1598103442097-8b74394b95c2?w=600',
+      calories: 1880, prepTime: 30, isFeatured: true, tags: ['lahori', 'whole-chicken', 'desi', 'sharing'],
+      customizations: {
+        create: [
+          { name: 'Spice Level', type: 'SINGLE', required: true, options: { create: [{ name: 'Medium', price: 0, isDefault: true }, { name: 'Hot', price: 0 }, { name: 'Extra Hot', price: 0 }] } },
+        ],
+      },
+    },
+  })
+
+  await prisma.product.create({
+    data: {
+      name: 'Chicken Shashlik',
+      slug: 'chicken-shashlik',
+      description: 'Juicy chicken cubes marinated in tangy shashlik spices, skewered with capsicum, onions and tomatoes, then grilled on open flame. Served with garlic sauce.',
+      categoryId: broast.id,
+      price: 849,
+      image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600',
+      calories: 490, prepTime: 20, isPopular: true, tags: ['shashlik', 'skewer', 'grilled', 'desi'],
+      customizations: {
+        create: [
+          { name: 'Skewers', type: 'SINGLE', required: true, options: { create: [{ name: '2 Skewers', price: 0, isDefault: true }, { name: '4 Skewers', price: 400 }] } },
+        ],
+      },
+    },
+  })
+
+  await prisma.product.create({
+    data: {
+      name: 'Garlic Butter Chicken',
+      slug: 'garlic-butter-chicken',
+      description: 'Crispy fried chicken glazed generously with our house garlic butter sauce. Rich, aromatic and utterly finger-licking good.',
+      categoryId: broast.id,
+      price: 799, comparePrice: 949,
+      image: 'https://images.unsplash.com/photo-1569058242567-93de6f36f8eb?w=600',
+      calories: 620, prepTime: 15, isFeatured: true, tags: ['garlic', 'butter', 'glazed'],
+      customizations: {
+        create: [
+          { name: 'Size', type: 'SINGLE', required: true, options: { create: [{ name: '4 Pieces', price: 0, isDefault: true }, { name: '6 Pieces', price: 300 }] } },
+        ],
+      },
+    },
+  })
+
+  await prisma.product.create({
+    data: {
+      name: 'Crispy Chicken Thighs',
+      slug: 'crispy-chicken-thighs',
+      description: 'Bone-in chicken thighs coated in our special seasoned batter and fried to perfect crunch. More meat, more flavour than regular pieces.',
+      categoryId: broast.id,
+      price: 649,
+      image: 'https://images.unsplash.com/photo-1581299894007-aaa50297cf16?w=600',
+      calories: 570, prepTime: 14, isPopular: true, tags: ['thighs', 'crispy', 'juicy'],
+      customizations: {
+        create: [
+          { name: 'Pieces', type: 'SINGLE', required: true, options: { create: [{ name: '2 Pieces', price: 0, isDefault: true }, { name: '4 Pieces', price: 280 }] } },
+          { name: 'Sauce', type: 'SINGLE', required: false, options: { create: [{ name: 'No Sauce', price: 0, isDefault: true }, { name: 'Buffalo', price: 0 }, { name: 'Honey Garlic', price: 0 }, { name: 'BBQ', price: 0 }] } },
+        ],
+      },
+    },
+  })
+
+  // ============================================
+  // BURGERS — additional products
+  // ============================================
+  await prisma.product.create({
+    data: {
+      name: 'Chicken Fajita Burger',
+      slug: 'chicken-fajita-burger',
+      description: 'Grilled chicken strips with sautéed bell peppers, onions, chipotle sauce and melted cheddar in a toasted bun. Mexican-inspired fast food fusion.',
+      categoryId: burgers.id,
+      price: 699, comparePrice: 799,
+      image: 'https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=600',
+      calories: 630, prepTime: 12, isFeatured: true, isPopular: true, tags: ['fajita', 'chicken', 'grilled', 'fusion'],
+      customizations: {
+        create: [
+          { name: 'Meal Option', type: 'SINGLE', required: false, options: { create: [{ name: 'Burger Only', price: 0, isDefault: true }, { name: 'With Fries', price: 150 }, { name: 'With Fries & Drink', price: 250 }] } },
+          { name: 'Spice Level', type: 'SINGLE', required: false, options: { create: [{ name: 'Mild', price: 0, isDefault: true }, { name: 'Medium', price: 0 }, { name: 'Hot', price: 0 }] } },
+        ],
+      },
+    },
+  })
+
+  await prisma.product.create({
+    data: {
+      name: 'Crispy Fish Burger',
+      slug: 'crispy-fish-burger',
+      description: 'Golden-fried fish fillet in a crispy beer batter, with tartar sauce, lettuce and pickles on a soft sesame bun. Coastal comfort food.',
+      categoryId: burgers.id,
+      price: 649,
+      image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=600',
+      calories: 560, prepTime: 12, tags: ['fish', 'crispy', 'seafood'],
+      customizations: {
+        create: [
+          { name: 'Meal Option', type: 'SINGLE', required: false, options: { create: [{ name: 'Burger Only', price: 0, isDefault: true }, { name: 'With Fries & Drink', price: 250 }] } },
+        ],
+      },
+    },
+  })
+
+  await prisma.product.create({
+    data: {
+      name: 'Smoky Beef Burger',
+      slug: 'smoky-beef-burger',
+      description: 'Smoked 100% beef patty with cheddar, crispy bacon, smoky BBQ sauce and caramelised onions on a charcoal toasted bun.',
+      categoryId: burgers.id,
+      price: 849, comparePrice: 999,
+      image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600',
+      calories: 810, prepTime: 14, isFeatured: true, isPopular: true, tags: ['beef', 'smoky', 'bbq', 'premium'],
+      customizations: {
+        create: [
+          { name: 'Add-ons', type: 'MULTIPLE', required: false, options: { create: [{ name: 'Extra Patty', price: 180 }, { name: 'Extra Cheese', price: 60 }, { name: 'Fried Egg', price: 70 }] } },
+          { name: 'Meal Option', type: 'SINGLE', required: false, options: { create: [{ name: 'Burger Only', price: 0, isDefault: true }, { name: 'With Fries & Drink', price: 250 }] } },
+        ],
+      },
+    },
+  })
+
+  await prisma.product.create({
+    data: {
+      name: 'Loaded Ranch Burger',
+      slug: 'loaded-ranch-burger',
+      description: 'Double fried chicken with crispy onion strings, ranch sauce, pickled jalapeños and crunchy coleslaw. Every bite a full experience.',
+      categoryId: burgers.id,
+      price: 799,
+      image: 'https://images.unsplash.com/photo-1600555379765-f5bc5c9b9e17?w=600',
+      calories: 750, prepTime: 12, isPopular: true, tags: ['ranch', 'loaded', 'chicken'],
+    },
+  })
+
+  await prisma.product.create({
+    data: {
+      name: 'Korean Fried Chicken Burger',
+      slug: 'korean-fried-chicken-burger',
+      description: 'Extra crispy Korean-style double-fried chicken in a sweet & spicy gochujang glaze, with pickled daikon and sriracha mayo.',
+      categoryId: burgers.id,
+      price: 899, comparePrice: 1049,
+      image: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=600',
+      calories: 690, prepTime: 15, isFeatured: true, tags: ['korean', 'crispy', 'spicy', 'gochujang'],
+      customizations: {
+        create: [
+          { name: 'Spice Level', type: 'SINGLE', required: true, options: { create: [{ name: 'Mild', price: 0, isDefault: true }, { name: 'Medium Spicy', price: 0 }, { name: 'Extra Spicy', price: 0 }] } },
+        ],
+      },
+    },
+  })
+
+  // ============================================
+  // PIZZA — additional products
+  // ============================================
+  await prisma.product.create({
+    data: {
+      name: 'Chicken Fajita Pizza',
+      slug: 'chicken-fajita-pizza',
+      description: 'Grilled chicken strips, sautéed bell peppers, red onions and jalapeños on a chipotle sauce base with mozzarella. A Mexican-Italian fusion.',
+      categoryId: pizza.id,
+      price: 1099, comparePrice: 1249,
+      image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600',
+      calories: 870, prepTime: 18, isFeatured: true, isPopular: true, tags: ['fajita', 'chicken', 'spicy', 'fusion'],
+      customizations: {
+        create: [
+          { name: 'Size', type: 'SINGLE', required: true, options: { create: [{ name: '9" Regular', price: 0, isDefault: true }, { name: '12" Large', price: 300 }, { name: '15" XL', price: 600 }] } },
+          { name: 'Crust', type: 'SINGLE', required: false, options: { create: [{ name: 'Thin Crust', price: 0, isDefault: true }, { name: 'Thick Crust', price: 50 }, { name: 'Stuffed Crust', price: 150 }] } },
+        ],
+      },
+    },
+  })
+
+  await prisma.product.create({
+    data: {
+      name: 'Spicy Beef Tikka Pizza',
+      slug: 'spicy-beef-tikka-pizza',
+      description: 'Tender beef tikka pieces, green chillies, red onions and capsicum on a spiced tomato base loaded with mozzarella. Bold, meaty and fiery.',
+      categoryId: pizza.id,
+      price: 1249,
+      image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600',
+      calories: 980, prepTime: 22, isPopular: true, tags: ['beef', 'tikka', 'spicy', 'desi'],
+      customizations: {
+        create: [
+          { name: 'Size', type: 'SINGLE', required: true, options: { create: [{ name: '9" Regular', price: 0, isDefault: true }, { name: '12" Large', price: 300 }, { name: '15" XL', price: 600 }] } },
+          { name: 'Spice Level', type: 'SINGLE', required: false, options: { create: [{ name: 'Medium', price: 0, isDefault: true }, { name: 'Hot', price: 0 }, { name: 'Extra Hot', price: 0 }] } },
+        ],
+      },
+    },
+  })
+
+  await prisma.product.create({
+    data: {
+      name: 'Garlic Chicken Pizza',
+      slug: 'garlic-chicken-pizza',
+      description: 'Creamy garlic sauce base with grilled chicken, mushrooms, mozzarella and fresh parsley. A rich, comforting pizza for garlic lovers.',
+      categoryId: pizza.id,
+      price: 1049,
+      image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600',
+      calories: 850, prepTime: 18, isFeatured: true, tags: ['garlic', 'chicken', 'creamy'],
+      customizations: {
+        create: [
+          { name: 'Size', type: 'SINGLE', required: true, options: { create: [{ name: '9" Regular', price: 0, isDefault: true }, { name: '12" Large', price: 300 }] } },
+        ],
+      },
+    },
+  })
+
+  await prisma.product.create({
+    data: {
+      name: 'BBQ Beef & Mushroom Pizza',
+      slug: 'bbq-beef-mushroom-pizza',
+      description: 'Smoky BBQ base topped with minced beef, sautéed mushrooms, red onions and a double layer of mozzarella. Hearty and satisfying.',
+      categoryId: pizza.id,
+      price: 1199,
+      image: 'https://images.unsplash.com/photo-1548369937-47519962c11a?w=600',
+      calories: 1010, prepTime: 20, isPopular: true, tags: ['beef', 'mushroom', 'bbq'],
+      customizations: {
+        create: [
+          { name: 'Size', type: 'SINGLE', required: true, options: { create: [{ name: '9" Regular', price: 0, isDefault: true }, { name: '12" Large', price: 300 }, { name: '15" XL', price: 600 }] } },
+        ],
+      },
+    },
+  })
+
+  // ============================================
+  // SIDES & SNACKS — additional products
+  // ============================================
+  await prisma.product.create({
+    data: {
+      name: 'Peri Peri Fries',
+      slug: 'peri-peri-fries',
+      description: 'Crispy golden fries tossed generously in our house peri peri seasoning — smoky, spicy and completely addictive. The upgrade your fries deserve.',
+      categoryId: sides.id,
+      price: 249, comparePrice: 299,
+      image: 'https://images.unsplash.com/photo-1630384060421-a4323ce5663e?w=600',
+      calories: 350, prepTime: 6, isPopular: true, tags: ['peri-peri', 'spicy', 'fries'],
+      customizations: {
+        create: [
+          { name: 'Size', type: 'SINGLE', required: true, options: { create: [{ name: 'Regular', price: 0, isDefault: true }, { name: 'Large', price: 80 }] } },
+        ],
+      },
+    },
+  })
+
+  await prisma.product.create({
+    data: {
+      name: 'Chicken Shawarma',
+      slug: 'chicken-shawarma',
+      description: 'Juicy marinated chicken slices with garlic sauce, pickles, tomatoes and fries wrapped in a soft warm bread. A street food legend.',
+      categoryId: sides.id,
+      price: 349,
+      image: 'https://images.unsplash.com/photo-1561758033-d89a9ad46330?w=600',
+      calories: 520, prepTime: 8, isPopular: true, tags: ['shawarma', 'wrap', 'desi', 'street-food'],
+      customizations: {
+        create: [
+          { name: 'Spice Level', type: 'SINGLE', required: false, options: { create: [{ name: 'Mild', price: 0, isDefault: true }, { name: 'Medium', price: 0 }, { name: 'Hot', price: 0 }] } },
+          { name: 'Add-ons', type: 'MULTIPLE', required: false, options: { create: [{ name: 'Extra Garlic Sauce', price: 30 }, { name: 'Extra Fries', price: 50 }] } },
+        ],
+      },
+    },
+  })
+
+  await prisma.product.create({
+    data: {
+      name: 'Desi Samosa (3 pcs)',
+      slug: 'desi-samosa',
+      description: 'Three crispy golden samosas stuffed with spiced potatoes, peas and fresh herbs. Served with imli (tamarind) chutney and green chutney.',
+      categoryId: sides.id,
+      price: 149,
+      image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600',
+      calories: 270, prepTime: 5, isPopular: true, tags: ['samosa', 'desi', 'vegetarian', 'snack'],
+    },
+  })
+
+  await prisma.product.create({
+    data: {
+      name: 'Jalapeno Poppers',
+      slug: 'jalapeno-poppers',
+      description: 'Six crispy-fried jalapeños stuffed with cream cheese and cheddar. The perfect combination of heat, crunch and gooey cheese.',
+      categoryId: sides.id,
+      price: 299,
+      image: 'https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=600',
+      calories: 310, prepTime: 7, tags: ['jalapeno', 'spicy', 'cheese', 'snack'],
+    },
+  })
+
+  await prisma.product.create({
+    data: {
+      name: 'Cheesy Nachos',
+      slug: 'cheesy-nachos',
+      description: 'Crispy corn tortilla chips loaded with molten cheese sauce, jalapeños, salsa, sour cream and guacamole. Perfect for sharing.',
+      categoryId: sides.id,
+      price: 399,
+      image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600',
+      calories: 490, prepTime: 8, isFeatured: true, isPopular: true, tags: ['nachos', 'cheese', 'sharing', 'snack'],
+      customizations: {
+        create: [
+          { name: 'Add-ons', type: 'MULTIPLE', required: false, options: { create: [{ name: 'Chicken Topping', price: 80 }, { name: 'Extra Cheese Sauce', price: 60 }, { name: 'Extra Jalapeños', price: 30 }] } },
+        ],
+      },
+    },
+  })
+
+  // ============================================
+  // DEALS & COMBOS — additional products
+  // ============================================
+  await prisma.product.create({
+    data: {
+      name: 'Breakfast Broast Deal',
+      slug: 'breakfast-broast-deal',
+      description: 'Start your day right — 2 pcs Crispy Broast + Egg Paratha + Dahi + Chai. Available from opening till 12 PM. A full desi breakfast.',
+      categoryId: deals.id,
+      price: 549, comparePrice: 749,
+      image: 'https://images.unsplash.com/photo-1608039829572-78524f79c4c7?w=600',
+      calories: 980, prepTime: 12, isPopular: true, tags: ['breakfast', 'nashta', 'desi', 'morning'],
+    },
+  })
+
+  await prisma.product.create({
+    data: {
+      name: 'Game Night Box',
+      slug: 'game-night-box',
+      description: 'Level up your game night — Cheesy Nachos + Mozzarella Sticks + Chicken Nuggets (10 pcs) + Jalapeño Poppers + 3 Drinks. Snack heaven.',
+      categoryId: deals.id,
+      price: 1299, comparePrice: 1749,
+      image: 'https://images.unsplash.com/photo-1567521464027-f127ff144326?w=600',
+      calories: 1680, prepTime: 15, isFeatured: true, isPopular: true, tags: ['snack', 'game-night', 'sharing', 'party'],
+    },
+  })
+
+  await prisma.product.create({
+    data: {
+      name: 'Pizza Party Deal (4 pizzas)',
+      slug: 'pizza-party-deal',
+      description: 'All the pizza, none of the stress — 4x 12" Pizzas of your choice (Lahori Tikka, BBQ Chicken, Pepperoni Feast & Margherita) + 2x 1.5L Drinks.',
+      categoryId: deals.id,
+      price: 3999, comparePrice: 5599,
+      image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600',
+      calories: 6400, prepTime: 30, isFeatured: true, tags: ['pizza', 'party', 'bulk', 'sharing'],
+    },
+  })
+
+  await prisma.product.create({
+    data: {
+      name: 'Ramadan Iftar Box',
+      slug: 'ramadan-iftar-box',
+      description: 'Break your fast in style — 4 pcs Broast + 4 Samosas + Garlic Bread + Coleslaw + Mango Lassi + 2 Drinks. A complete iftar spread.',
+      categoryId: deals.id,
+      price: 1799, comparePrice: 2399,
+      image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600',
+      calories: 2600, prepTime: 20, isPopular: true, tags: ['ramadan', 'iftar', 'desi', 'deal'],
+    },
+  })
+
+  // ============================================
+  // BEVERAGES — additional products
+  // ============================================
+  await prisma.product.create({
+    data: {
+      name: 'Kashmiri Chai',
+      slug: 'kashmiri-chai',
+      description: 'The iconic pink tea — brewed with special Kashmiri tea leaves, milk, cardamom and topped with crushed pistachios and almonds. Warm and soothing.',
+      categoryId: beverages.id,
+      price: 199,
+      image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=600',
+      calories: 160, prepTime: 5, isPopular: true, tags: ['chai', 'desi', 'hot', 'kashmiri', 'tea'],
+    },
+  })
+
+  await prisma.product.create({
+    data: {
+      name: 'Cold Coffee',
+      slug: 'cold-coffee',
+      description: 'Chilled blended coffee with milk and sugar, served over crushed ice. Strong espresso kick with a creamy, sweet finish. Your afternoon pick-me-up.',
+      categoryId: beverages.id,
+      price: 249, comparePrice: 299,
+      image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600',
+      calories: 280, prepTime: 3, isPopular: true, isFeatured: true, tags: ['coffee', 'cold', 'caffeinated', 'blended'],
+      customizations: {
+        create: [
+          { name: 'Size', type: 'SINGLE', required: false, options: { create: [{ name: 'Regular 350ml', price: 0, isDefault: true }, { name: 'Large 500ml', price: 80 }] } },
+          { name: 'Sweetness', type: 'SINGLE', required: false, options: { create: [{ name: 'Regular Sweet', price: 0, isDefault: true }, { name: 'Less Sweet', price: 0 }, { name: 'Extra Sweet', price: 0 }] } },
+        ],
+      },
+    },
+  })
+
+  await prisma.product.create({
+    data: {
+      name: 'Mint Margarita',
+      slug: 'mint-margarita',
+      description: 'Refreshing non-alcoholic margarita with fresh mint, lime juice, sparkling water and a pinch of black salt. Zesty, fizzy and incredibly refreshing.',
+      categoryId: beverages.id,
+      price: 229,
+      image: 'https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=600',
+      calories: 90, prepTime: 3, tags: ['mint', 'fresh', 'fizzy', 'mocktail'],
+    },
+  })
+
+  await prisma.product.create({
+    data: {
+      name: 'Falsa Sharbat',
+      slug: 'falsa-sharbat',
+      description: 'Sweet and tangy falsa (grewia) sharbat — a beloved summer Pakistani drink made with fresh falsa berries, lemon and kala namak. Seasonal speciality.',
+      categoryId: beverages.id,
+      price: 179,
+      image: 'https://images.unsplash.com/photo-1560526861-ba5740f9ef27?w=600',
+      calories: 110, prepTime: 2, isPopular: true, tags: ['falsa', 'desi', 'traditional', 'sweet'],
+    },
+  })
+
+  await prisma.product.create({
+    data: {
+      name: 'Nutella Shake',
+      slug: 'nutella-shake',
+      description: 'Indulgent Nutella milkshake blended with hazelnut spread, real ice cream and milk, topped with whipped cream and crushed hazelnuts.',
+      categoryId: beverages.id,
+      price: 399, comparePrice: 449,
+      image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600',
+      calories: 600, prepTime: 4, isFeatured: true, tags: ['nutella', 'shake', 'hazelnut', 'indulgent'],
+      customizations: {
+        create: [
+          { name: 'Size', type: 'SINGLE', required: false, options: { create: [{ name: 'Regular 350ml', price: 0, isDefault: true }, { name: 'Large 500ml', price: 80 }] } },
+        ],
+      },
+    },
+  })
+
+  // ============================================
   // COUPONS
   // ============================================
   await prisma.coupon.createMany({
@@ -955,7 +1407,7 @@ async function main() {
     ],
   })
 
-  console.log('✅ Database seeded successfully with 58 products across 6 categories!')
+  console.log('✅ Database seeded successfully with 82 products across 6 categories!')
 }
 
 main()

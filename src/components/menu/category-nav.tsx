@@ -3,6 +3,16 @@
 import Link from "next/link"
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
+import { Drumstick, Sandwich, Pizza, Utensils, Gift, GlassWater, type LucideIcon } from "lucide-react"
+
+const categoryIconMap: Record<string, LucideIcon> = {
+  "broast-chicken": Drumstick,
+  "burgers": Sandwich,
+  "pizza": Pizza,
+  "sides-snacks": Utensils,
+  "deals-combos": Gift,
+  "beverages": GlassWater,
+}
 
 interface Category {
   id: string
@@ -35,6 +45,7 @@ export function CategoryNav({ categories, activeCategory }: CategoryNavProps) {
             </Link>
             {categories.map((category) => {
               const isActive = activeCategory === category.slug
+              const IconComponent = categoryIconMap[category.slug]
               return (
                 <Link
                   key={category.id}
@@ -46,7 +57,7 @@ export function CategoryNav({ categories, activeCategory }: CategoryNavProps) {
                       : "bg-zinc-900 text-zinc-400 border border-zinc-800 hover:border-zinc-700 hover:text-white"
                   )}
                 >
-                  {category.icon && <span>{category.icon}</span>}
+                  {IconComponent && <IconComponent className="h-4 w-4" />}
                   {category.name}
                 </Link>
               )

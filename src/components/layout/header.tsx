@@ -14,6 +14,7 @@ const navigation = [
   { name: "Home", href: "/" },
   { name: "Menu", href: "/menu" },
   { name: "Deals", href: "/menu?category=deals-combos" },
+  { name: "What's New", href: "/whats-new" },
   { name: "About", href: "/about" },
   { name: "Contact", href: "/contact" },
 ]
@@ -42,13 +43,16 @@ export function Header() {
               key={item.name}
               href={item.href}
               className={cn(
-                "px-4 py-2 text-sm font-medium rounded-lg transition-colors",
+                "relative px-4 py-2 text-sm font-medium rounded-lg transition-colors",
                 pathname === item.href
                   ? "text-orange-400 bg-orange-500/10"
                   : "text-zinc-400 hover:text-white hover:bg-zinc-800"
               )}
             >
               {item.name}
+              {item.href === "/whats-new" && (
+                <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-orange-500 animate-pulse" />
+              )}
             </Link>
           ))}
         </nav>
@@ -152,13 +156,16 @@ export function Header() {
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
                   className={cn(
-                    "flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors",
+                    "flex items-center justify-between px-4 py-3 text-sm font-medium rounded-lg transition-colors",
                     pathname === item.href
                       ? "text-orange-400 bg-orange-500/10"
                       : "text-zinc-400 hover:text-white hover:bg-zinc-800"
                   )}
                 >
                   {item.name}
+                  {item.href === "/whats-new" && (
+                    <span className="text-xs bg-orange-500 text-white px-2 py-0.5 rounded-full font-semibold">New</span>
+                  )}
                 </Link>
               ))}
               <a
