@@ -98,13 +98,13 @@ Every `git push` automatically triggers a new deployment on Vercel.
 ### Step 1 — Get Stripe Keys
 1. Go to https://dashboard.stripe.com
 2. **Developers** → **API Keys**
-3. Copy **Secret key** (`sk_test_...`) and **Publishable key** (`pk_test_...`)
+3. Copy **Secret key** and **Publishable key** from the API Keys section
 
 ### Step 2 — Add to local .env.local
 ```env
-STRIPE_SECRET_KEY=sk_test_your-key-here
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_your-key-here
-STRIPE_WEBHOOK_SECRET=whsec_your-webhook-secret
+STRIPE_SECRET_KEY=<your-stripe-secret-key>
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=<your-stripe-publishable-key>
+STRIPE_WEBHOOK_SECRET=<your-stripe-webhook-secret>
 ```
 
 ### Step 3 — Add to Vercel
@@ -114,21 +114,128 @@ STRIPE_WEBHOOK_SECRET=whsec_your-webhook-secret
 
 ---
 
-## 6. Adding UploadThing (Product Images) Later
+## 6. UploadThing — File Uploads Setup & Usage
 
-### Step 1 — Get Keys
-1. Go to https://uploadthing.com
-2. Create account → New App
-3. Copy **Secret** and **App ID**
+UploadThing is already integrated in this project for uploading product images, avatars, and review images.
 
-### Step 2 — Add to .env.local
+---
+
+### Step 1 — Create UploadThing Account
+
+1. Go to **https://uploadthing.com**
+2. Sign up or log in
+3. Click **"Create a new app"**
+4. Give it a name e.g. `karachi-broast`
+
+---
+
+### Step 2 — Get Your API Keys
+
+In your UploadThing dashboard:
+1. Open your app
+2. Click **API Keys** tab
+3. Copy all three values:
+
+| Key | Where to find |
+|-----|--------------|
+| `UPLOADTHING_TOKEN` | API Keys tab — main token |
+| `UPLOADTHING_SECRET` | API Keys tab — secret key |
+| `UPLOADTHING_APP_ID` | API Keys tab — App ID |
+
+---
+
+### Step 3 — Add Keys to `.env` and `.env.local`
+
+Open both `.env` and `.env.local` and fill in:
+
 ```env
-UPLOADTHING_SECRET=sk_live_your-secret
-UPLOADTHING_APP_ID=your-app-id
+UPLOADTHING_SECRET=<your-uploadthing-secret>
+UPLOADTHING_APP_ID=<your-uploadthing-app-id>
+UPLOADTHING_TOKEN=<your-uploadthing-token>
 ```
 
-### Step 3 — Add to Vercel
-Same as Stripe — add in Environment Variables then redeploy.
+> **Note:** `UPLOADTHING_TOKEN` is the most important key in newer versions. Add all three to be safe.
+
+---
+
+### Step 4 — Add to Vercel (Production)
+
+1. Go to **https://vercel.com/dashboard**
+2. Open your **Karachi-Broast** project
+3. **Settings → Environment Variables**
+4. Add these 3 variables with the same values:
+   - `UPLOADTHING_SECRET`
+   - `UPLOADTHING_APP_ID`
+   - `UPLOADTHING_TOKEN`
+5. Click **Redeploy** for changes to take effect
+
+---
+
+### How It Works in This Project
+
+Everything is already set up. These files are pre-configured:
+
+| File | Purpose |
+|------|---------|
+| `src/lib/uploadthing.ts` | Defines upload routes (what files are allowed) |
+| `src/app/api/uploadthing/route.ts` | API endpoint UploadThing communicates with |
+
+**Three upload routes are available:**
+
+| Route name | Use case | Max size | Max files |
+|------------|----------|----------|-----------|
+| `productImageUploader` | Upload product photos in admin | 4MB | 4 images |
+| `avatarUploader` | User profile pictures | 2MB | 1 image |
+| `reviewImageUploader` | Images attached to reviews | 4MB | 4 images |
+
+---
+
+### Step 5 — Using UploadThing in a Component
+
+To add an upload button anywhere in your app:
+
+```tsx
+import { UploadButton } from "@uploadthing/react"
+import type { OurFileRouter } from "@/lib/uploadthing"
+
+export function ProductImageUpload() {
+  return (
+    <UploadButton<OurFileRouter, "productImageUploader">
+      endpoint="productImageUploader"
+      onClientUploadComplete={(res) => {
+        // res[0].url gives you the uploaded image URL
+        console.log("Uploaded URL:", res[0].url)
+      }}
+      onUploadError={(error) => {
+        console.error("Upload failed:", error.message)
+      }}
+    />
+  )
+}
+```
+
+---
+
+### Step 6 — Test It Locally
+
+1. Make sure `.env.local` has all 3 keys filled
+2. Start dev server:
+```bash
+npm run dev
+```
+3. The upload endpoint is live at: `http://localhost:3000/api/uploadthing`
+4. Try uploading an image through the admin panel or any component using `UploadButton`
+
+---
+
+### Common UploadThing Errors
+
+| Error | Fix |
+|-------|-----|
+| `Invalid token` | Check `UPLOADTHING_TOKEN` in `.env.local` is correct |
+| `Unauthorized` | Make sure user is logged in (auth check in middleware) |
+| `File too large` | Reduce image size or increase `maxFileSize` in `src/lib/uploadthing.ts` |
+| Works locally but not on Vercel | Add all 3 keys to Vercel Environment Variables and redeploy |
 
 ---
 
